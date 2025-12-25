@@ -13,7 +13,9 @@ import {
   ChevronRight,
   ScrollText,
   LayoutDashboard,
-  Home
+  Home,
+  Instagram,
+  Facebook
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -367,8 +369,8 @@ export default function MalabarKannadaSangama() {
               key={key}
               onClick={() => scrollToSection(key as keyof typeof sections)}
               className={`flex-1 md:flex-none relative px-3 md:px-6 py-2 md:py-2.5 rounded-full text-xs md:text-sm font-medium transition-all duration-300 whitespace-nowrap text-center ${activeSection === key
-                  ? 'bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300 shadow-sm'
-                  : 'text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800'
+                ? 'bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300 shadow-sm'
+                : 'text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800'
                 }`}
             >
               <span className="relative z-10">
@@ -585,6 +587,28 @@ export default function MalabarKannadaSangama() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-2xl font-bold mb-4">ಮಿಸ್ಬಾಹುಲ್ ಜಾಮಿಆ ಕನ್ನಡ ಸಂಘ</h2>
           <p className="text-gray-400 mb-6">ಪಟ್ಟಿಕ್ಕಾಡ್ – ಕೇರಳ</p>
+
+          <div className="flex justify-center gap-6 mb-8">
+            <a
+              href="https://www.instagram.com/misbahul_jamia?igsh=YnI4eG14a2U4NHIx"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-3 bg-gray-800 rounded-full text-gray-400 hover:text-pink-500 hover:bg-gray-700 transition-all transform hover:scale-110"
+              aria-label="Instagram"
+            >
+              <Instagram size={24} />
+            </a>
+            <a
+              href="https://www.facebook.com/share/1DE6FRWGBV/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-3 bg-gray-800 rounded-full text-gray-400 hover:text-blue-500 hover:bg-gray-700 transition-all transform hover:scale-110"
+              aria-label="Facebook"
+            >
+              <Facebook size={24} />
+            </a>
+          </div>
+
           <div className="w-16 h-1 bg-amber-600 mx-auto mb-6 rounded"></div>
           <p className="text-sm text-gray-500">ಸಮಸ್ತ ಕೇರಳ ಜಂಇಯ್ಯತುಲ್ ಉಲಮಾ – ಶತಮಾನೋತ್ಸವ ವಿಶೇಷ</p>
           <p className="text-xs text-gray-600 mt-8">© 2025 Malabar Kannada Sangama Interactive Experience</p>

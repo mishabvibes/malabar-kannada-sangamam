@@ -1,0 +1,38 @@
+function sendEmailOnFormSubmit(e) {
+  // 1. CONFIGURATION
+  // Replace this with your email address
+  var TO_EMAIL = "your-email@example.com"; 
+  var EMAIL_SUBJECT = "New Registration: Malabar Kannada Sangamam";
+
+  // 2. GET DATA FROM THE SHEET
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var lastRow = sheet.getLastRow();
+  var lastColumn = sheet.getLastColumn();
+  
+  // Fetch the data from the last row (the newest entry)
+  var dataRange = sheet.getRange(lastRow, 1, 1, lastColumn);
+  var data = dataRange.getValues()[0];
+
+  // Assuming headers are: Name, Institution, Place, Mobile, SubmittedAt
+  // Adjust indices if your columns are different (0-based index)
+  var name = data[0];
+  var institution = data[1];
+  var place = data[2];
+  var mobile = data[3];
+  var submittedAt = data[4];
+
+  // 3. CONSTRUCT EMAIL BODY
+  var body = "A new user has registered for Malabar Kannada Sangamam.\n\n";
+  body += "Name: " + name + "\n";
+  body += "Institution: " + institution + "\n";
+  body += "Place: " + place + "\n";
+  body += "Mobile: " + mobile + "\n";
+  body += "Date: " + submittedAt + "\n\n";
+  body += "View the full spreadsheet here: " + SpreadsheetApp.getActiveSpreadsheet().getUrl();
+
+  // 4. SEND EMAIL
+  // We use a small check to ensure we don't send emails for empty rows
+  if (name && mobile) {
+     MailApp.sendEmail(TO_EMAIL, EMAIL_SUBJECT, body);
+  }
+}
