@@ -300,11 +300,25 @@ export default function MalabarKannadaSangama() {
     setDarkMode(!darkMode);
   };
 
+  // Auto-detect system theme on mount
+  useEffect(() => {
+    // Check local storage or system preference
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      setDarkMode(savedTheme === 'dark');
+    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      setDarkMode(true);
+    }
+  }, []);
+
+  // Update DOM and Local Storage when darkMode changes
   useEffect(() => {
     if (darkMode) {
       document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
     } else {
       document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
     }
   }, [darkMode]);
 
@@ -342,7 +356,7 @@ export default function MalabarKannadaSangama() {
             {/* Logo Area */}
             <div className="flex items-center gap-2.5">
               <div className="bg-amber-100 dark:bg-amber-900/40 p-1.5 rounded-full">
-                <BookOpen className="text-amber-600 dark:text-amber-500 w-4 h-4" />
+                <Image src="/logo.png" alt="ಮಲಬಾರ್ ಸಂಗಮ" width={24} height={24} />
               </div>
               <span className="text-sm font-bold tracking-tight text-gray-900 dark:text-gray-100">ಮಲಬಾರ್ ಸಂಗಮ</span>
             </div>
