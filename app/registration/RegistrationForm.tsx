@@ -1,8 +1,9 @@
 'use client';
 
 import React, { useActionState, useEffect, useRef, useState } from 'react';
-import { BookOpen, User, Building, MapPin, Phone, ArrowLeft, Loader2, X, CheckCircle, AlertCircle, Calendar } from 'lucide-react';
+import { BookOpen, User, Building, MapPin, Phone, ArrowLeft, Loader2, X, CheckCircle, AlertCircle, Calendar, Sun, Moon } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { registerUser } from '@/app/actions/register';
 
 const initialState = {
@@ -36,28 +37,72 @@ export default function RegistrationForm() {
         }
     }, [state]);
 
+    const [darkMode, setDarkMode] = useState(false);
+
+    // Dark Mode Toggle Logic
+    const toggleTheme = () => {
+        setDarkMode(!darkMode);
+    };
+
+    // Auto-detect system theme on mount
+    useEffect(() => {
+        // Check local storage or system preference
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            setDarkMode(savedTheme === 'dark');
+        } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            setDarkMode(true);
+        }
+    }, []);
+
+    // Update DOM and Local Storage when darkMode changes
+    useEffect(() => {
+        if (darkMode) {
+            document.documentElement.classList.add('dark');
+            localStorage.setItem('theme', 'dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+            localStorage.setItem('theme', 'light');
+        }
+    }, [darkMode]);
+
     if (isRegistrationClosed) {
         return (
             <div className="min-h-screen bg-gray-50 dark:bg-zinc-950 text-gray-900 dark:text-gray-100 font-sans transition-colors duration-300">
-                <nav className="sticky top-0 z-40 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-xl border-b border-gray-200 dark:border-zinc-800">
-                    <div className="max-w-7xl mx-auto px-6">
-                        <div className="flex justify-between items-center h-16">
+                {/* Header Navigation - Registration Closed View */}
+                <header className="fixed top-0 left-0 right-0 z-50 px-4 md:px-6 py-4 transition-all duration-300 pointer-events-none">
+                    <div className="max-w-7xl mx-auto">
+                        <div className="bg-white/80 dark:bg-zinc-900/80 backdrop-blur-xl rounded-2xl shadow-sm border border-gray-200/50 dark:border-zinc-800 pointer-events-auto flex justify-between items-center p-2 pl-4 pr-2">
+
+                            {/* Logo Area */}
                             <Link href="/" className="flex items-center gap-2.5 transition-opacity hover:opacity-80">
                                 <div className="bg-amber-100 dark:bg-amber-900/40 p-1.5 rounded-full">
-                                    <BookOpen className="text-amber-600 dark:text-amber-500 w-4 h-4" />
+                                    <Image src="/logo.png" alt="ಮಲಬಾರ್ ಸಂಗಮ" width={24} height={24} />
                                 </div>
-                                <span className="text-lg font-bold tracking-tight text-gray-900 dark:text-white">ಮಲಬಾರ್ ಸಂಗಮ</span>
+                                <span className="text-sm font-bold tracking-tight text-gray-900 dark:text-gray-100">ಮಲಬಾರ್ ಸಂಗಮ</span>
                             </Link>
-                            <Link
-                                href="/"
-                                className="flex items-center gap-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-amber-600 dark:hover:text-amber-500 transition-colors"
-                            >
-                                <ArrowLeft size={16} />
-                                ಹಿಂದಕ್ಕೆ
-                            </Link>
+
+                            {/* Actions Area */}
+                            <div className="flex items-center gap-2">
+                                <Link
+                                    href="/"
+                                    className="hidden md:flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-zinc-800 transition-all"
+                                >
+                                    <ArrowLeft size={16} />
+                                    ಹಿಂದಕ್ಕೆ
+                                </Link>
+
+                                <button
+                                    onClick={toggleTheme}
+                                    className="p-2.5 rounded-xl bg-gray-100 dark:bg-zinc-800 text-gray-500 dark:text-gray-400 hover:text-amber-600 dark:hover:text-amber-400 hover:bg-gray-200 dark:hover:bg-zinc-700 transition-colors"
+                                    aria-label="Toggle Dark Mode"
+                                >
+                                    {darkMode ? <Sun size={18} /> : <Moon size={18} />}
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </nav>
+                </header>
                 <div className="max-w-xl mx-auto px-4 py-20 text-center animate-fade-in-up">
                     <div className="bg-white dark:bg-zinc-900 rounded-3xl shadow-xl shadow-gray-200/50 dark:shadow-black/50 border border-gray-100 dark:border-zinc-800 p-12">
                         <div className="flex justify-center mb-8">
@@ -86,28 +131,43 @@ export default function RegistrationForm() {
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-zinc-950 text-gray-900 dark:text-gray-100 font-sans transition-colors duration-300">
             {/* Navigation */}
-            <nav className="sticky top-0 z-40 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-xl border-b border-gray-200 dark:border-zinc-800">
-                <div className="max-w-7xl mx-auto px-6">
-                    <div className="flex justify-between items-center h-16">
+            {/* Header Navigation - Main Form View */}
+            <header className="fixed top-0 left-0 right-0 z-50 px-4 md:px-6 py-4 transition-all duration-300 pointer-events-none">
+                <div className="max-w-7xl mx-auto">
+                    <div className="bg-white/80 dark:bg-zinc-900/80 backdrop-blur-xl rounded-2xl shadow-sm border border-gray-200/50 dark:border-zinc-800 pointer-events-auto flex justify-between items-center p-2 pl-4 pr-2">
+
+                        {/* Logo Area */}
                         <Link href="/" className="flex items-center gap-2.5 transition-opacity hover:opacity-80">
                             <div className="bg-amber-100 dark:bg-amber-900/40 p-1.5 rounded-full">
-                                <BookOpen className="text-amber-600 dark:text-amber-500 w-4 h-4" />
+                                <Image src="/logo.png" alt="ಮಲಬಾರ್ ಸಂಗಮ" width={24} height={24} />
                             </div>
-                            <span className="text-lg font-bold tracking-tight text-gray-900 dark:text-white">ಮಲಬಾರ್ ಸಂಗಮ</span>
+                            <span className="text-sm font-bold tracking-tight text-gray-900 dark:text-gray-100">ಮಲಬಾರ್ ಸಂಗಮ</span>
                         </Link>
-                        <Link
-                            href="/"
-                            className="flex items-center gap-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-amber-600 dark:hover:text-amber-500 transition-colors"
-                        >
-                            <ArrowLeft size={16} />
-                            ಹಿಂದಕ್ಕೆ
-                        </Link>
+
+                        {/* Actions Area */}
+                        <div className="flex items-center gap-2">
+                            <Link
+                                href="/"
+                                className="hidden md:flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-zinc-800 transition-all"
+                            >
+                                <ArrowLeft size={16} />
+                                ಹಿಂದಕ್ಕೆ
+                            </Link>
+
+                            <button
+                                onClick={toggleTheme}
+                                className="p-2.5 rounded-xl bg-gray-100 dark:bg-zinc-800 text-gray-500 dark:text-gray-400 hover:text-amber-600 dark:hover:text-amber-400 hover:bg-gray-200 dark:hover:bg-zinc-700 transition-colors"
+                                aria-label="Toggle Dark Mode"
+                            >
+                                {darkMode ? <Sun size={18} /> : <Moon size={18} />}
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </nav>
+            </header>
 
             {/* Main Content */}
-            <div className="max-w-xl mx-auto px-4 py-16 sm:px-6">
+            <div className="max-w-xl mx-auto px-4 py-16 sm:px-6 pt-20">
                 <div className="bg-white dark:bg-zinc-900 rounded-3xl shadow-xl shadow-gray-200/50 dark:shadow-black/50 border border-gray-100 dark:border-zinc-800 overflow-hidden">
 
                     {/* Header */}
